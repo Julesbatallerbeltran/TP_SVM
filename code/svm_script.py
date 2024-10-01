@@ -1,16 +1,3 @@
----
-title: "SVM"
-subtitle: "Jules BATALLER-BELTRAN"
-format:
-  html:
-    code-fold: true
-jupyter: python3
----
-## Introduction
-Les Support Vector Machine, SVM, sont des méthodes d'apprentissage supervisés appliqués à la classification, la régression et la détection des valeurs aberrantes.elles reposent sur l’application d’algorithmes de recherche de règles de décision linéaires.
-Ces règles sont appelés hyperplans (affines) séparateurs.
-Ici nous allons explorer les utilisations des SVM, en commencant par l'appliquer sur la base de données iris.
-```{python}
 #| echo: false
 #| include: false
 import sys
@@ -114,13 +101,8 @@ y = y[y != 0]
 X, y = shuffle(X, y)
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.5)
 
-```
 
 
-## Question 1
-Pour commencer, nous allons séparer linéairement la classe 1 contre la classe 2 du dataset iris en se servant des deux premières variables.
-
-```{python}
 
 # fit the model
 parameters = {'kernel': ['linear'], 'C': list(np.logspace(-3, 3, 200))}
@@ -139,18 +121,6 @@ print('Generalization score for linear kernel: %s, %s' %
       (clf_linear_grid.score(X_train, y_train),
        clf_linear_grid.score(X_test, y_test)))
 
-```
-
-Nous séparons donc aléatoirement le jeu de données en deux parties. L'une est réservée à l'entraîenement et l'autre à l'evaluation (test).
-
-Nous obtenons alors le score de l'échantillon d'entraînement (en premier) et le score de l'échantillon de test (en second) pour un noyau linéaire.
-
-## Question 2
-
-
-Nous voulons alors comparer ce résultat avec un SVM basé sur noyau polynomial.
-
-```{python}
 # Q2 polynomial kernel
 Cs = list(np.logspace(-3, 3, 5))
 gammas = 10. ** np.arange(1, 2)
@@ -219,24 +189,7 @@ frontiere(f_poly, X, y)
 plt.title("polynomial kernel")
 plt.tight_layout()
 plt.draw()
-```
 
-On observe que sur cet exemple, le noyau linéaire obtient un meilleur score que le noyau polynomial (bien que le noyau polynomial soit plus sofistiqué). A noter que dans ces réalisations nous avons utilisé la valeur par défaut pour l'argument $C$, c'est-à-dire $C$ = $1.0$.
-
-
-# Classification de visages
-
-Appliquons cette méthode à un problème de classification de visages. Le jeu de données utilisé est le Labeled Faces in the Wild, qui contient plus de 13 000 photos de personnes célèbres.
-
-Dans cet exemple, les deux grilles de recherche produisent des scores similaires. Le degré optimal du polynôme semble être $1$, ce qui signifie que le noyau est linéaire.
-
-\section{SVM GUI} Nous allons maintenant examiner le comportement d'un classifieur linéaire sur un jeu de données déséquilibré en fonction du paramètre $C$. Nous afficherons la classification pour des valeurs de $C$ égales à $5$, $1$, $0.1$ et $0.01$.
-
-On observe que plus la valeur de $C$ diminue, moins le classifieur prend en compte le groupe de points noirs (le classifieur se déplace progressivement vers le haut) jusqu'à atteindre le cas extrême de $C = 0.001$ où tous les points noirs sont mal classifiés. Il serait donc souhaitable de donner un poids plus important aux erreurs sur la classe de points minoritaires.
-
-\section{Classification de visages} Dans cette section, nous allons effectuer la classification de visages en utilisant les méthodes SVM sur les images de Tony Blair et Colin Powell. Voici un exemple d'images de Tony Blair tirées de notre jeu de données.
-
-```{python}
 """
 The dataset used in this example is a preprocessed excerpt
 of the "Labeled Faces in the Wild", aka LFW_:
@@ -279,14 +232,8 @@ X_train, X_test = X[train_idx, :], X[test_idx, :]
 y_train, y_test = y[train_idx], y[test_idx]
 images_train, images_test = images[
     train_idx, :, :, :], images[test_idx, :, :, :]
-```
 
 
-## Question 4
-
-Nous souhaitons démontrer l'influence du paramètre de régularisation. La figure illustre le score d'apprentissage en fonction de C sur une échelle logarithmique allant de 10000 à 0,0001.
-
-```{python}
 print("--- Linear kernel ---")
 print("Fitting the classifier to the training set")
 start_time = time()
@@ -315,12 +262,8 @@ print("Best score: {}".format(np.max(scores)))
 
 print("Predicting the people names on the testing set")
 start_time = time()
-```
-
-Nous observons que le score d'apprentissage augmente avec la constante de tolérance C. Le score atteint un plateau lorsque C = $10^{-3}$, indiquant ainsi que c'est le meilleur paramètre.
 
 
-```{python}
 # Ensure that Cs and ind are defined
 Cs = 10. ** np.arange(-5, 6)
 scores = []
@@ -339,11 +282,9 @@ print("done in %0.3fs" % (time() - start_time))
 # The chance level is the accuracy that will be reached when constantly predicting the majority class.
 print("Chance level: %s" % max(np.mean(y), 1. - np.mean(y)))
 print("Accuracy: %s" % classifier.score(X_test, y_test))
-``` 
 
-Revenons-en à la classification des visages. 
 
-```{python}
+
 def run_svm_cv(_X, _y):
     _indices = np.random.permutation(_X.shape[0])
     _train_idx, _test_idx = _indices[:_X.shape[0] // 2], _indices[_X.shape[0] // 2:]
@@ -437,17 +378,7 @@ plt.show()
 plt.figure()
 plt.imshow(np.reshape(clf.coef_, (h, w)))
 plt.show()
-```
 
-Nous pouvons comparer les prédictions aux véritables identités des personnes. Le modèle se révèle assez performant. Sur les 12 photos de Blair et Powell, il ne commet aucune erreur. Bien que ce ne soit qu'un exemple, le classifieur montre une bonne précision avec un taux de réussite de 90%.
-
-La seconde figure met en évidence les parties du visage les plus utiles pour la reconnaissance. Plus la zone est jaune, plus elle est importante pour distinguer un visage. On observe que les zones les plus significatives sont la bouche, le haut du crâne, les yeux et le nez.
-
-## Question 5
-
-Nous ajoutons maintenant des variables de nuisances ($\texttt{X_noisy}$), ce qui augmente le nombre de variables tout en gardant le nombre de points d'apprentissage constant. Après implémentation, nous obtenons les résultats suivants :
-
-```{python}
 def run_svm_cv(X, y):
     np.random.seed(18)
     indices = np.random.permutation(X.shape[0])
@@ -473,12 +404,7 @@ sigma = 5
 noise = sigma * np.random.randn(n_samples, 300)
 X_noisy = np.concatenate((X, noise), axis=1)
 run_svm_cv(X_noisy, y)
-```
 
-Nous observons alors que la performance diminue considérablement lorsqu'on ajoute des variables de nuisance
-
-## Question 6
-```{python}
 #| echo: false
 np.random.seed(404)
 
@@ -506,6 +432,3 @@ X_redu_200 = pca_200.transform(X_ncr)
 # Print score after reduction to 200 components
 print("Score après réduction sur 200 composantes :")
 run_svm_cv(X_redu_200, y)
-``` 
-
-On voit que le meilleur score est obtenu en réduisant sur 380 composantes.
