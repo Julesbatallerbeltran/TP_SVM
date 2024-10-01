@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>       clf_linear_grid.score(X_test, y_test)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'C': 0.03696912707195026, 'kernel': 'linear'}
+<pre><code>{'C': 0.14820207057988585, 'kernel': 'linear'}
 Generalization score for linear kernel: 0.66, 0.74</code></pre>
 </div>
 </div>
@@ -208,21 +208,15 @@ Generalization score for linear kernel: 0.66, 0.74</code></pre>
 <span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>plt.draw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'C': 31.622776601683793, 'degree': 1, 'gamma': 10.0, 'kernel': 'poly'}
-Generalization score for polynomial kernel: 0.74, 0.72
-Generalization score for polynomial kernel: 0.66, 0.6</code></pre>
+<pre><code>{'C': 0.03162277660168379, 'degree': 2, 'gamma': 10.0, 'kernel': 'poly'}
+Generalization score for polynomial kernel: 0.62, 0.66
+Generalization score for polynomial kernel: 0.64, 0.58</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="visuel_TPSVM_test_files/figure-html/cell-4-output-2.png" width="1401" height="469"></p>
 </div>
 </div>
 <p>On observe que sur cet exemple, le noyau linéaire obtient un meilleur score que le noyau polynomial (bien que le noyau polynomial soit plus sofistiqué). A noter que dans ces réalisations nous avons utilisé la valeur par défaut pour l’argument <span class="math inline">\(C\)</span>, c’est-à-dire <span class="math inline">\(C\)</span> = <span class="math inline">\(1.0\)</span>.</p>
-</section>
-<section id="svm-gui" class="level1">
-<h1>SVM GUI</h1>
-<section id="question-3" class="level2">
-<h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
-</section>
 </section>
 <section id="classification-de-visages" class="level1">
 <h1>Classification de visages</h1>
@@ -351,9 +345,9 @@ Predicting the people names on the testing set</code></pre>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Accuracy: </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span> classifier.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>done in 0.166s
+<pre><code>done in 0.184s
 Chance level: 0.6210526315789474
-Accuracy: 0.9210526315789473</code></pre>
+Accuracy: 0.8842105263157894</code></pre>
 </div>
 </div>
 <p>Revenons-en à la classification des visages.</p>
@@ -456,19 +450,19 @@ Accuracy: 0.9210526315789473</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Score sans variable de nuisance
-Generalization score for linear kernel: 1.0, 0.8421052631578947 
+Generalization score for linear kernel: 1.0, 0.9157894736842105 
 
 Score avec variable de nuisance
-Generalization score for linear kernel: 0.9894736842105263, 0.5368421052631579 
+Generalization score for linear kernel: 1.0, 0.5421052631578948 
 
 --- Linear kernel ---
 Fitting the classifier to the training set
 Best C: 0.001
 Best score: 1.0
 Predicting the people names on the testing set
-done in 7.438s
+done in 8.961s
 Chance level : 0.6210526315789474
-Accuracy : 0.9210526315789473</code></pre>
+Accuracy : 0.8842105263157894</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="visuel_TPSVM_test_files/figure-html/cell-8-output-2.png" width="663" height="469"></p>
